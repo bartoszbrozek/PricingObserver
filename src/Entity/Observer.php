@@ -34,7 +34,7 @@ class Observer
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="observer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="observer", orphanRemoval=true)
      */
     private $products;
 

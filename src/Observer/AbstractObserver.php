@@ -67,6 +67,7 @@ abstract class AbstractObserver
                 $content = file_get_contents($observer->getAddress());
 
                 foreach ($this->domConfigs as $domConfig) {
+
                     if ($this->searchFinished) {
                         dump("Search finished: ".$observer->getName());
                         break;
@@ -81,7 +82,7 @@ abstract class AbstractObserver
                     $domElements = $this->crawler->filter($config)->first();
 
                     if (!is_countable($domElements) || !is_object($domElements) || count($domElements) <= 0) {
-                        $this->saveError($observer, "DOM elements are not countable. DOM Config used: " . $domConfig);
+                        $this->saveError($observer, "DOM elements are not countable. DOM Config used: " . $config);
                         continue;
                     }
 
@@ -90,7 +91,7 @@ abstract class AbstractObserver
                             $price = $this->parseHtmlAndGetPrice($domElement->textContent);
 
                             if ($price === null || empty($price)) {
-                                throw new \Exception("Could not get price. DOM Config used: " . $domConfig);
+                                throw new \Exception("Could not get price. DOM Config used: " . $config);
                             }
 
                             $this->saveProduct($observer, $price);

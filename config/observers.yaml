@@ -2,7 +2,10 @@ komputronik:
     class: "App\\Observer\\Komputronik"
     enabled: true
     domConfigs:
-        - "section#p-inner-prices > div.prices > span.price > span.proper"
+        #- "section#p-inner-prices > div.prices > span.price > span.proper":
+        #    - 1 #divider
         - "span.proper":
+            - 100 #divider
+        - "span.at-gross-price-0":
             - 100 #divider
     priceMatchRegex: '/\d+(?:\.\d{1,2})?/'

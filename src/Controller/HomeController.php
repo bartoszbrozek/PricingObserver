@@ -11,14 +11,15 @@ class HomeController extends AbstractController
 {
     public function index()
     {
-       $observers = $this->getDoctrine()->getRepository(Observer::class)->findAll();
+        $observers = $this->getDoctrine()->getRepository(Observer::class)->findAll();
 
         return $this->render('home/index.html.twig', [
             'observers' => $observers
         ]);
     }
 
-    public function add(Request $request) {
+    public function add(Request $request)
+    {
         $observer = new Observer();
 
         $form = $this->createForm(ObserverType::class, $observer);
@@ -42,6 +43,7 @@ class HomeController extends AbstractController
     {
         $form = $this->createForm(ObserverType::class, $observer);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($observer);
@@ -55,7 +57,8 @@ class HomeController extends AbstractController
         ]);
     }
 
-    public function show(int $id) {
+    public function show(int $id)
+    {
         $observer = $this->getDoctrine()->getRepository(Observer::class)->findOneBy(['id' => $id]);
 
         return $this->render('home/show.html.twig', [

@@ -13,7 +13,9 @@ class Observer
         $observerObjects = [];
 
         foreach ($observers as $observerName => $observer) {
-            $observerObjects[] = new $observer['class']($observer['domConfig'], $observerName, $observer['priceMatchRegex']);
+            $instance = new $observer['class']();
+            $instance->loadDomConfiguration($observer['domConfigs'], $observerName, $observer['priceMatchRegex']);
+            $observerObjects[] = $instance;
         }
 
         return $observerObjects;

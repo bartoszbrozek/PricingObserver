@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block body %}
+
+    <h2>Observer {{ observer.name }}</h2>
+    <h3>Address <a href="{{ observer.address }}">{{ observer.address }}</a></h3>
+    <h3>Type {{ observer.type }}</h3>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Price</th>
+            <th scope="col">Created At</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in observer.products %}
+            <tr>
+                <th scope="row">{{ product.id }}</th>
+                <td>{{ product.price }}</td>
+                <td>{{ product.getCreatedAt().format("Y-m-d H:i:s") }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

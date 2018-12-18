@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block body %}
+
+    <h2>Observers</h2>
+
+    <table class="table" data-toolbar="#toolbar">
+        <div id="toolbar">
+            <a type="button" class="btn btn-primary" href="{{ path('observer-add') }}">Add Observer</a>
+        </div>
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Type</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for observer in observers %}
+            <tr>
+                <th scope="row">{{ observer.id }}</th>
+                <td>{{ observer.name }}</td>
+                <td><a href="{{ observer.address }}" target="_blank">{{ observer.address }}</a></td>
+                <td>{{ observer.type }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Actions">
+                        <a href="{{ path('observer-show', {'id': observer.id}) }}" class="btn btn-success">Show</a>
+                        <a href="{{ path('observer-edit', {'id': observer.id}) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ path('observer-remove', {'id': observer.id}) }}" class="btn btn-danger">Remove</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

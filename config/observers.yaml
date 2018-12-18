@@ -1,0 +1,5 @@
+komputronik:
+    class: "App\\Observer\\Komputronik"
+    enabled: true
+    domConfig: "section#p-inner-prices > div.prices > span.price > span.proper"
+    priceMatchRegex: '/\d+(?:\.\d{1,2})?/'

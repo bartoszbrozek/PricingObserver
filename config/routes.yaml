@@ -1,0 +1,19 @@
+index:
+  path: /
+  controller: App\Controller\HomeController::index
+
+observer-add:
+  path: /observer/add
+  controller: App\Controller\HomeController::add
+
+observer-show:
+  path: /observer/{id}/show
+  controller: App\Controller\HomeController::show
+
+observer-edit:
+  path: /observer/{id}/edit
+  controller: App\Controller\HomeController::edit
+
+observer-remove:
+  path: /observer/{id}/remove
+  controller: App\Controller\HomeController::remove

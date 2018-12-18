@@ -5,9 +5,12 @@
 {% block body %}
 
     <h2>Observer {{ observer.name }}</h2>
-    <h3>Address <a href="{{ observer.address }}">{{ observer.address }}</a></h3>
-    <h3>Type {{ observer.type }}</h3>
+    <h6>Address <a href="{{ observer.address }}">{{ observer.address }}</a></h6>
+    <h6>Type {{ observer.type }}</h6>
 
+    <hr>
+
+    <h3>Data</h3>
     <table class="table">
         <thead class="thead-dark">
         <tr>
@@ -22,6 +25,26 @@
                 <th scope="row">{{ product.id }}</th>
                 <td>{{ product.price }}</td>
                 <td>{{ product.getCreatedAt().format("Y-m-d H:i:s") }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Errors</h3>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Message</th>
+            <th scope="col">Created At</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for error in observer.getErrors() %}
+            <tr>
+                <th scope="row">{{ error.id }}</th>
+                <td>{{ error.msg }}</td>
+                <td>{{ error.getCreatedAt().format("Y-m-d H:i:s") }}</td>
             </tr>
         {% endfor %}
         </tbody>

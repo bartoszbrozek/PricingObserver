@@ -17,26 +17,33 @@ class Komputronik extends AbstractObserver
     public function run()
     {
         foreach ($this->observers as $observer) {
-            $this->crawler->clear();
-            $this->crawler->addHtmlContent(file_get_contents($observer->getAddress()));
+            try {
+                $this->crawler->clear();
+                $this->crawler->addHtmlContent(file_get_contents($observer->getAddress()));
 
-            if (!\is_countable($this->crawler->filter($this->domConfig)->first())) {
-                $this->saveError($observer, "DOM elements are not countable");
-                continue;
-            }
+                $domElements = $this->crawler->filter($this->domConfig)->first();
 
-            foreach ($this->crawler->filter($this->domConfig)->first() as $domElement) {
-                try {
-                    $price = $this->parseHtmlAndGetPrice($domElement->textContent);
-
-                    if ($price === null) {
-                        throw new \Exception("Could not get price");
-                    }
-
-                    $this->saveProduct($observer, $price);
-                } catch (\Exception $ex) {
-                    $this->saveError($observer, $ex->getMessage());
+                if (!is_countable($domElements) || !is_object($domElements) || count($domElements) <= 0) {
+                    $this->saveError($observer, "DOM elements are not countable");
+                    continue;
                 }
+
+                foreach ($domElements as $domElement) {
+                    try {
+                        $price = $this->parseHtmlAndGetPrice($domElement->textContent);
+
+                        if ($price === null || empty($price)) {
+                            echo 1;
+                            throw new \Exception("Could not get price");
+                        }
+
+                        $this->saveProduct($observer, $price);
+                    } catch (\Exception $ex) {
+                        $this->saveError($observer, $ex->getMessage());
+                    }
+                }
+            } catch (\Exception $ex) {
+                $this->saveError($observer, $ex->getMessage());
             }
         }
     }
@@ -58,7 +65,7 @@ class Komputronik extends AbstractObserver
         preg_match_all($this->priceMatchRegex, str_replace(",", ".", $html), $matches);
 
         if (empty($matches[0][0])) {
-            throw new \Exception("Could not get price. Matches: ".json_encode($matches));
+            throw new \Exception("Could not get price. Matches: " . json_encode($matches));
         }
 
         $price = "";
